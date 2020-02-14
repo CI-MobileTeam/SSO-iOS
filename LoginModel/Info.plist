@@ -35,7 +35,7 @@
 			<string>LineLogin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+				<string>line3rdp.com.cloudinteractive.sso</string>
 			</array>
 		</dict>
 	</array>
@@ -44,6 +44,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>lineauth2</string>
+		<string>line</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -51,8 +52,6 @@
 	<dict>
 		<key>ChannelID</key>
 		<string>1653849381</string>
-		<key>UniversalLink</key>
-		<string>https://yourdomain.com/line-auth/</string>
 	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
