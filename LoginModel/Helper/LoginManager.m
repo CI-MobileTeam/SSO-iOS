@@ -16,7 +16,7 @@ typedef void(^ObserveOfSentButton)(BOOL);
 
 
 @property(strong, nonatomic)LoginViewController *delegateVC;
-@property(copy, nonatomic)void(^LoginBlock)(BOOL,LoginSuccessModel *, NSString *);
+@property(copy, nonatomic)void(^LoginBlock)(BOOL,id<LoginSuccessSpec>, NSString *);
 
 @end
 
@@ -63,16 +63,22 @@ typedef void(^ObserveOfSentButton)(BOOL);
 -(void)LoginWithFB:(UIViewController *)presentVC{
     FBSDKLoginManager *manager = [FBSDKLoginManager new];
     [manager logInWithPermissions:
-     @[@"public_profile"] fromViewController:presentVC handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
+     @[@"public_profile",@"email"] fromViewController:presentVC handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
         if (error) {
-             NSLog(@"Process error");
-           } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
-           } else {
-             NSLog(@"Logged in");
-           }
+            self.LoginBlock(NO, nil, error.description);
+        } else if (result.isCancelled) {
+            self.LoginBlock(NO, nil, nil);
+        } else {
+            LoginSuccessModel *model = [LoginSuccessModel new];
+            model.token = result.token.tokenString;
+            model.name = [FBSDKProfile currentProfile].name;
+            model.ID = result.token.userID;
+            self.LoginBlock(YES, model, nil);
+        }
     }];
 }
+
+
 
 -(void)LoginWithGoogle:(UIViewController *)presentVC{
     [[GIDSignIn sharedInstance] setDelegate:self.delegateVC];
