@@ -42,7 +42,7 @@ typedef void(^ObserveOfSentButton)(BOOL);
             [self LoginWithGoogle:presentVC];
             break;
         case FACEBOOKLOGIN:
-            [self LoginWithFB];
+            [self LoginWithFB:presentVC];
             break;
         case LINELOGIN:
             [self LoginWithLine:presentVC];
@@ -58,11 +58,20 @@ typedef void(^ObserveOfSentButton)(BOOL);
 -(void)LoginWithLine:(UIViewController *)presentVC{
     [[LineSDKLogin sharedInstance] setDelegate:self.delegateVC];
     [[LineSDKLogin sharedInstance] startLoginWithPermissions:@[@"profile", @"friends", @"groups"]];
-    //[[LineSDKLogin sharedInstance] ]
 }
 
--(void)LoginWithFB{
-    
+-(void)LoginWithFB:(UIViewController *)presentVC{
+    FBSDKLoginManager *manager = [FBSDKLoginManager new];
+    [manager logInWithPermissions:
+     @[@"public_profile"] fromViewController:presentVC handler:^(FBSDKLoginManagerLoginResult * _Nullable result, NSError * _Nullable error) {
+        if (error) {
+             NSLog(@"Process error");
+           } else if (result.isCancelled) {
+             NSLog(@"Cancelled");
+           } else {
+             NSLog(@"Logged in");
+           }
+    }];
 }
 
 -(void)LoginWithGoogle:(UIViewController *)presentVC{

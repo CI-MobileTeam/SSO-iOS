@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import <GoogleSignIn/GoogleSignIn.h>
+#import <LineSDK/LineSDK.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 #define GOOGLE_SIGNIN_APPID @"919405796658-0vc2qr4qi9bookf52uf26tlsgc7h2lal.apps.googleusercontent.com"
 #define LINE_CHANNEL_ID @"1653849381"
 
@@ -19,17 +24,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     [self setGoogleSignInConfig];
-    [self setLineSignInConfig];
+    
     return YES;
 }
 
 -(void)setGoogleSignInConfig{
     [[GIDSignIn sharedInstance] setClientID:GOOGLE_SIGNIN_APPID];
-}
-
--(void)setLineSignInConfig{
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -75,6 +78,11 @@
     
     if ([[LineSDKLogin sharedInstance] handleOpenURL:url]) {
         
+        return YES;
+    }
+    
+    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+    if (handled) {
         return YES;
     }
     

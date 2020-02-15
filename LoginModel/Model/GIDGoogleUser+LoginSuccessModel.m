@@ -20,7 +20,7 @@
     return self.authentication.clientID;
 }
 
-- (nonnull NSString *)accessToken {
+- (nonnull NSString *)userToken {
     return self.authentication.accessToken;
 }
 

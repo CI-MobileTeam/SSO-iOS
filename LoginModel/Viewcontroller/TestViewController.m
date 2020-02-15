@@ -18,14 +18,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+- (IBAction)FBLoginAction:(id)sender {
+    [[LoginManager sharedInstance] LoginWithThirdParty:FACEBOOKLOGIN presentVC:self completion:^(BOOL isSuccess, id<LoginSuccessSpec> _Nonnull model, NSString * _Nonnull errorMsg) {
+            NSLog(@"userName = %@, userID = %@, Token = %@",model.userName,model.userID,model.userToken);
+    }];}
 - (IBAction)googleSignAction:(id)sender {
     [[LoginManager sharedInstance] LoginWithThirdParty:GOOGLELOGIN presentVC:self completion:^(BOOL isSuccess, id<LoginSuccessSpec> _Nonnull model, NSString * _Nonnull errorMsg) {
-            NSLog(@"userName = %@, userID = %@, Token = %@",model.userName,model.userID,model.accessToken);
+            NSLog(@"userName = %@, userID = %@, Token = %@",model.userName,model.userID,model.userToken);
     }];
 }
 - (IBAction)lineSignAction:(id)sender {
     [[LoginManager sharedInstance] LoginWithThirdParty:LINELOGIN presentVC:self completion:^(BOOL isSuccess, id<LoginSuccessSpec> _Nonnull model, NSString * _Nonnull errorMsg) {
-        NSLog(@"userName = %@, userID = %@, Token = %@",model.userName,model.userID,model.accessToken);
+        NSLog(@"userName = %@, userID = %@, Token = %@",model.userName,model.userID,model.userToken);
     }];
 }
 

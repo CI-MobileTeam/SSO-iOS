@@ -12,4 +12,16 @@
 
 
 
+- (nonnull NSString *)userID {
+    return self.ID;
+}
+
+- (nonnull NSString *)userName {
+    return self.name;
+}
+
+- (nonnull NSString *)userToken {
+    return self.token;
+}
+
 @end

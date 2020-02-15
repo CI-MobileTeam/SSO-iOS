@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GoogleSignIn/GoogleSignIn.h>
-#import <LineSDK/LineSDK.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

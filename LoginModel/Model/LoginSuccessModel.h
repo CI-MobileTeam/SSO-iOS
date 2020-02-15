@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol LoginSuccessSpec <NSObject>
 
--(NSString *)accessToken;
+-(NSString *)userToken;
 -(NSString *)userName;
 -(NSString *)userID;
 
@@ -20,8 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-@interface LoginSuccessModel : NSObject
+@interface LoginSuccessModel : NSObject<LoginSuccessSpec>
 
+@property (strong, nonatomic) NSString *token;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *ID;
 
 @end
 

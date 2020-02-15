@@ -19,7 +19,7 @@
     return self.IDToken.name;
 }
 
--(NSString *)accessToken{
+-(NSString *)userToken{
     return self.accessToken.accessToken;
 }
 @end

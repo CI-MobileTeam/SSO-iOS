@@ -33,7 +33,16 @@
 
 //LineSignIn delegate
 -(void)didLogin:(LineSDKLogin *)login credential:(LineSDKCredential *)credential profile:(LineSDKProfile *)profile error:(NSError *)error{
-    [self.delegate LoginSuccessWithModel:credential];
+    if (!error) {
+        LoginSuccessModel *model = [LoginSuccessModel new];
+        model.ID = profile.userID;
+        model.name = profile.displayName;
+        model.token = credential.accessToken.accessToken;
+        [self.delegate LoginSuccessWithModel:model];
+    }else{
+        [self.delegate LoginFaliWithErrorMessage:error.localizedDescription];
+    }
 }
+
 
 @end
