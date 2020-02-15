@@ -35,7 +35,7 @@
 			<string>LineLogin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>line3rdp.$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+				<string>line3rdp.com.cloudinteractive.sso</string>
 			</array>
 		</dict>
 		<dict>
@@ -51,23 +51,28 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>186438775778435</string>
+	<key>FacebookDisplayName</key>
+	<string>Cloud-interactive login</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>lineauth2</string>
-        <string>fbapi</string>
-        <string>fbapi20130214</string>
-        <string>fbapi20130410</string>
-        <string>fbapi20130702</string>
-        <string>fbapi20131010</string>
-        <string>fbapi20131219</string>
-        <string>fbapi20140410</string>
-        <string>fbapi20140116</string>
-        <string>fbapi20150313</string>
-        <string>fbapi20150629</string>
-        <string>fbapi20160328</string>
-        <string>fbauth</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
+		<string>line</string>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbapi20160328</string>
+		<string>fbauth</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -75,8 +80,6 @@
 	<dict>
 		<key>ChannelID</key>
 		<string>1653849381</string>
-		<key>UniversalLink</key>
-		<string>https://yourdomain.com/line-auth/</string>
 	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -99,9 +102,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>FacebookAppID</key>
-    <string>186438775778435</string>
-    <key>FacebookDisplayName</key>
-    <string>Cloud-interactive login</string>
 </dict>
 </plist>
