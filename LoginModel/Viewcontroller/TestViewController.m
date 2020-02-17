@@ -32,6 +32,11 @@
         NSLog(@"userName = %@, userID = %@, Token = %@",model.userName,model.userID,model.userToken);
     }];
 }
+- (IBAction)appleSignAction:(id)sender {
+    [[LoginManager sharedInstance] LoginWithThirdParty:APPLELOGIN presentVC:self completion:^(BOOL isSuccess, id<LoginSuccessSpec> _Nonnull model, NSString * _Nonnull errorMsg) {
+        NSLog(@"userName = %@, userID = %@, Token = %@",model.userName,model.userID,model.userToken);
+    }];
+}
 
 /*
 #pragma mark - Navigation

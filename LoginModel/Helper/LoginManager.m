@@ -8,15 +8,16 @@
 
 #import "LoginManager.h"
 #import "LoginViewController.h"
-
+#import <AuthenticationServices/AuthenticationServices.h>
 
 typedef void(^ObserveOfSentButton)(BOOL);
 
-@interface LoginManager()<LoginViewControllerDelegate>
+@interface LoginManager()<LoginViewControllerDelegate, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding>
 
 
 @property(strong, nonatomic)LoginViewController *delegateVC;
 @property(copy, nonatomic)void(^LoginBlock)(BOOL,id<LoginSuccessSpec>, NSString *);
+@property(strong, nonatomic)UIViewController *presentVC;
 
 @end
 
@@ -36,7 +37,7 @@ typedef void(^ObserveOfSentButton)(BOOL);
 
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion{
     self.LoginBlock = completion;
-    
+    self.presentVC = presentVC;
     switch (logintype) {
         case GOOGLELOGIN:
             [self LoginWithGoogle:presentVC];
@@ -87,6 +88,20 @@ typedef void(^ObserveOfSentButton)(BOOL);
 }
 
 -(void)LoginWithApple{
+    if (@available(iOS 13.0, *)) {
+        ASAuthorizationAppleIDProvider *pro = [ASAuthorizationAppleIDProvider new];
+        ASAuthorizationAppleIDRequest *req = pro.createRequest;
+        req.requestedScopes = @[ASAuthorizationScopeFullName,ASAuthorizationScopeEmail];
+        
+        ASAuthorizationController *controller = [[ASAuthorizationController alloc] initWithAuthorizationRequests:@[req]];
+        
+        controller.delegate = self;
+        controller.presentationContextProvider = self;
+        
+        [controller performRequests];
+    } else {
+        // Fallback on earlier versions
+    }
     
 }
 
@@ -97,6 +112,20 @@ typedef void(^ObserveOfSentButton)(BOOL);
 
 - (void)LoginSuccessWithModel:(id<LoginSuccessSpec>)model {
     self.LoginBlock(YES, model, nil);
+}
+
+//apple sign in delegate
+-(void)authorizationController:(ASAuthorizationController *)controller didCompleteWithError:(NSError *)error API_AVAILABLE(ios(13.0)){
+    
+}
+
+-(void)authorizationController:(ASAuthorizationController *)controller didCompleteWithAuthorization:(ASAuthorization *)authorization API_AVAILABLE(ios(13.0)){
+    ASAuthorizationAppleIDCredential *credential =  (ASAuthorizationAppleIDCredential *)authorization.credential;
+    NSLog(@"user = %@",[credential.fullName givenName]);
+}
+
+- (nonnull ASPresentationAnchor)presentationAnchorForAuthorizationController:(nonnull ASAuthorizationController *)controller  API_AVAILABLE(ios(13.0)){
+    return self.presentVC.view.window;
 }
 
 @end

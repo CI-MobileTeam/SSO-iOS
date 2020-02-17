@@ -24,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		146F562AF8A51C7CE84634F3 /* Pods-LoginModel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LoginModel.release.xcconfig"; path = "Target Support Files/Pods-LoginModel/Pods-LoginModel.release.xcconfig"; sourceTree = "<group>"; };
+		3728DEB323FA3F770034383C /* LoginModel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoginModel.entitlements; sourceTree = "<group>"; };
 		3782D13723F6907000F15454 /* LoginModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3782D13A23F6907000F15454 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3782D13B23F6907000F15454 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -91,6 +92,7 @@
 		3782D13923F6907000F15454 /* LoginModel */ = {
 			isa = PBXGroup;
 			children = (
+				3728DEB323FA3F770034383C /* LoginModel.entitlements */,
 				3782D13A23F6907000F15454 /* AppDelegate.h */,
 				3782D13B23F6907000F15454 /* AppDelegate.m */,
 				3782D16823F6912600F15454 /* Main.storyboard */,
@@ -430,6 +432,7 @@
 			baseConfigurationReference = A93C3910EA329A6102D78EA2 /* Pods-LoginModel.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LoginModel/LoginModel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L53G22BMA9;
 				INFOPLIST_FILE = LoginModel/Info.plist;
@@ -449,6 +452,7 @@
 			baseConfigurationReference = 146F562AF8A51C7CE84634F3 /* Pods-LoginModel.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = LoginModel/LoginModel.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = L53G22BMA9;
 				INFOPLIST_FILE = LoginModel/Info.plist;

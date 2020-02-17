@@ -10,8 +10,9 @@
 #import "LoginManager.h"
 #import "GIDGoogleUser+LoginSuccessModel.h"
 #import "LineSDKCredential+LoginSuccessModel.h"
+#import <AuthenticationServices/AuthenticationServices.h>
 
-@interface LoginViewController()
+@interface LoginViewController()<ASAuthorizationControllerDelegate>
 
 @end
 
