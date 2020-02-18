@@ -9,6 +9,7 @@
 #import "LoginManager.h"
 #import "LoginViewController.h"
 #import <AuthenticationServices/AuthenticationServices.h>
+#import "ASAuthorizationAppleIDCredential+LoginSuccessModel.h"
 
 typedef void(^ObserveOfSentButton)(BOOL);
 
@@ -24,7 +25,6 @@ typedef void(^ObserveOfSentButton)(BOOL);
 @implementation LoginManager
 
 + (instancetype)sharedInstance{
-    
     static LoginManager *manager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -33,6 +33,15 @@ typedef void(^ObserveOfSentButton)(BOOL);
         manager.delegateVC.delegate = manager;
     });
     return manager;
+}
+
+-(void)setConfig:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    if (![self.dataSource respondsToSelector:@selector(Google_AppID)] || !self.dataSource.Google_AppID) {
+        [NSException raise:@"loss Google app id" format:@"must set google app id"];
+    }else{
+        [[GIDSignIn sharedInstance] setClientID:self.dataSource.Google_AppID];
+    }
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion{
@@ -68,7 +77,7 @@ typedef void(^ObserveOfSentButton)(BOOL);
         if (error) {
             self.LoginBlock(NO, nil, error.description);
         } else if (result.isCancelled) {
-            self.LoginBlock(NO, nil, nil);
+            self.LoginBlock(NO, nil, @"be canceled");
         } else {
             LoginSuccessModel *model = [LoginSuccessModel new];
             model.token = result.token.tokenString;
@@ -101,6 +110,7 @@ typedef void(^ObserveOfSentButton)(BOOL);
         [controller performRequests];
     } else {
         // Fallback on earlier versions
+        self.LoginBlock(NO, nil, @"only support after ios 13.0");
     }
     
 }
@@ -116,12 +126,12 @@ typedef void(^ObserveOfSentButton)(BOOL);
 
 //apple sign in delegate
 -(void)authorizationController:(ASAuthorizationController *)controller didCompleteWithError:(NSError *)error API_AVAILABLE(ios(13.0)){
-    
+    self.LoginBlock(NO, nil, error.description);
 }
 
 -(void)authorizationController:(ASAuthorizationController *)controller didCompleteWithAuthorization:(ASAuthorization *)authorization API_AVAILABLE(ios(13.0)){
     ASAuthorizationAppleIDCredential *credential =  (ASAuthorizationAppleIDCredential *)authorization.credential;
-    NSLog(@"user = %@",[credential.fullName givenName]);
+    self.LoginBlock(YES, credential, nil);
 }
 
 - (nonnull ASPresentationAnchor)presentationAnchorForAuthorizationController:(nonnull ASAuthorizationController *)controller  API_AVAILABLE(ios(13.0)){

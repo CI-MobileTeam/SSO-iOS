@@ -18,11 +18,22 @@ typedef enum : NSUInteger {
     APPLELOGIN
 } LoginType;
 
+@protocol LoginManagerDataSource <NSObject>
+
+-(NSString *)lineChannel;
+-(NSString *)Google_AppID;
+
+@end
+
 
 @interface LoginManager : NSObject
 
+@property(weak, nonatomic) id<LoginManagerDataSource> dataSource;
+
 + (instancetype)sharedInstance;
 
+
+-(void)setConfig:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion;
 
 @end

@@ -26,10 +26,15 @@
 
 //GoogleSignIn delegate
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error{
-    [self.delegate LoginSuccessWithModel:user];
+    if (error) {
+        [self.delegate LoginFaliWithErrorMessage:error.description];
+    }else{
+        [self.delegate LoginSuccessWithModel:user];
+    }
 }
 
 - (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error{
+    //sign out flow
 }
 
 //LineSignIn delegate
