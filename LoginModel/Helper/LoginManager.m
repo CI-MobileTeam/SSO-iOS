@@ -47,27 +47,43 @@ typedef void(^ObserveOfSentButton)(BOOL);
     //line
     
     //apple
+    
+    
+    //check info.plist setting
     NSString *plistPath = @"";
     NSError *error = nil;
     NSPropertyListFormat format;
-
     plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
     NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization propertyListWithData:plistXML options:NSPropertyListMutableContainersAndLeaves format:&format error:&error];
+
     if (!temp[@"FacebookDisplayName"]) {
-        NSLog(@"facebook dispalyename miss");
+        [NSException raise:@"loss FacebookDisplayName" format:@"Some information must be set on info.plist key:FacebookDisplayName (about facebook)"];
     }else if (!temp[@"FacebookAppID"]){
-        NSLog(@"facebookappID config miss");
+        [NSException raise:@"loss FacebookAppID" format:@"Some information must be set on info.plist key:FacebookAppID (about facebook)"];
     }else if (!temp[@"LineSDKConfig"]){
-        NSLog(@"line config miss");
+        [NSException raise:@"loss LineSDKConfig" format:@"Some information must be set on info.plist key:LineSDKConfig (about line)"];
     }else if (temp[@"LSApplicationQueriesSchemes"]){
         NSArray *array = temp[@"LSApplicationQueriesSchemes"];
-        [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([(NSString *)obj isEqualToString:@"lineauth2"]) {
-                return;
+        BOOL lineInfoPlistSetted = false;
+        BOOL fbInfoPlistSetted = false;
+        for (int i = 0 ; i < array.count; i++) {
+            if ([array[i] isEqualToString: @"lineauth2"]) {
+                lineInfoPlistSetted = true;
             }
-        }];
+            if ([array[i] isEqualToString: @"fbauth"]) {
+                fbInfoPlistSetted = true;
+            }
+        }
+        if (!lineInfoPlistSetted) {
+            [NSException raise:@"loss lineInfoPlistSetted" format:@"Some information must be set on info.plist key:LSApplicationQueriesSchemes (about line)"];
+        }
+        
+        if (!fbInfoPlistSetted) {
+            [NSException raise:@"loss fbInfoPlistSetted" format:@"Some information must be set on info.plist key:LSApplicationQueriesSchemes (about facebook)"];
+        }
     }
+    
 }
 
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion{
