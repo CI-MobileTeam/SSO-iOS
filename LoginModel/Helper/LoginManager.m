@@ -36,12 +36,38 @@ typedef void(^ObserveOfSentButton)(BOOL);
 }
 
 -(void)setConfig:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    //google
     if (![self.dataSource respondsToSelector:@selector(Google_AppID)] || !self.dataSource.Google_AppID) {
         [NSException raise:@"loss Google app id" format:@"must set google app id"];
     }else{
         [[GIDSignIn sharedInstance] setClientID:self.dataSource.Google_AppID];
     }
+    //fb
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    //line
+    
+    //apple
+    NSString *plistPath = @"";
+    NSError *error = nil;
+    NSPropertyListFormat format;
+
+    plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+    NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization propertyListWithData:plistXML options:NSPropertyListMutableContainersAndLeaves format:&format error:&error];
+    if (!temp[@"FacebookDisplayName"]) {
+        NSLog(@"facebook dispalyename miss");
+    }else if (!temp[@"FacebookAppID"]){
+        NSLog(@"facebookappID config miss");
+    }else if (!temp[@"LineSDKConfig"]){
+        NSLog(@"line config miss");
+    }else if (temp[@"LSApplicationQueriesSchemes"]){
+        NSArray *array = temp[@"LSApplicationQueriesSchemes"];
+        [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([(NSString *)obj isEqualToString:@"lineauth2"]) {
+                return;
+            }
+        }];
+    }
 }
 
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion{
