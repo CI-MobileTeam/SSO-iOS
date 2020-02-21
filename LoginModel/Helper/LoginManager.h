@@ -21,8 +21,9 @@ typedef enum : NSUInteger {
 @protocol LoginManagerDataSource <NSObject>
 
 -(NSString *)lineChannel;
--(NSString *)Google_AppID;
-
+-(NSString *)GoogleAppID;
+-(NSString *)FacebookAppID;
+-(NSString *)FacebookDisplayName;
 @end
 
 
@@ -34,6 +35,7 @@ typedef enum : NSUInteger {
 
 
 -(void)setConfig:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion;
 
 @end

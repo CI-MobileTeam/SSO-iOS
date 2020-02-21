@@ -27,6 +27,7 @@
     // Override point for customization after application launch.
     
     [LoginManager sharedInstance].dataSource = self;
+    
     [[LoginManager sharedInstance] setConfig:application didFinishLaunchingWithOptions:launchOptions];
     
     return YES;
@@ -86,18 +87,23 @@
     return YES;
 }
 
--(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    return [[GIDSignIn sharedInstance] handleURL:url];
-}
-
-
-
-- (nonnull NSString *)Google_AppID {
+- (nonnull NSString *)GoogleAppID {
     return GOOGLE_SIGNIN_APPID;
 }
 
 - (nonnull NSString *)lineChannel {
     return LINE_CHANNEL_ID;
 }
+
+- (nonnull NSString *)FacebookAppID {
+    return @"186438775778435";
+}
+
+- (nonnull NSString *)FacebookDisplayName {
+    return @"Cloud-interactive login";
+}
+
+
+
 
 @end

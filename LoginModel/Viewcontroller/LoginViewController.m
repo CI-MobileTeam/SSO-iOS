@@ -35,6 +35,7 @@
 
 - (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error{
     //sign out flow
+    [self.delegate LoginFaliWithErrorMessage:error.localizedDescription];
 }
 
 //LineSignIn delegate

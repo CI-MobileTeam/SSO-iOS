@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3706EFC423FFAC2200B470AB /* LineSDKConfiguration+CustomerLineConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 3706EFC323FFAC2200B470AB /* LineSDKConfiguration+CustomerLineConfig.m */; };
 		3728DEB623FA64320034383C /* ASAuthorizationAppleIDCredential+LoginSuccessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3728DEB523FA64320034383C /* ASAuthorizationAppleIDCredential+LoginSuccessModel.m */; };
 		3728DEBA23FA70450034383C /* FinishController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3728DEB823FA70450034383C /* FinishController.m */; };
 		3728DEBB23FA70450034383C /* FinishController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3728DEB923FA70450034383C /* FinishController.xib */; };
@@ -27,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		146F562AF8A51C7CE84634F3 /* Pods-LoginModel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LoginModel.release.xcconfig"; path = "Target Support Files/Pods-LoginModel/Pods-LoginModel.release.xcconfig"; sourceTree = "<group>"; };
+		3706EFC223FFAC2200B470AB /* LineSDKConfiguration+CustomerLineConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LineSDKConfiguration+CustomerLineConfig.h"; sourceTree = "<group>"; };
+		3706EFC323FFAC2200B470AB /* LineSDKConfiguration+CustomerLineConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "LineSDKConfiguration+CustomerLineConfig.m"; sourceTree = "<group>"; };
 		3728DEB323FA3F770034383C /* LoginModel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoginModel.entitlements; sourceTree = "<group>"; };
 		3728DEB423FA64320034383C /* ASAuthorizationAppleIDCredential+LoginSuccessModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ASAuthorizationAppleIDCredential+LoginSuccessModel.h"; sourceTree = "<group>"; };
 		3728DEB523FA64320034383C /* ASAuthorizationAppleIDCredential+LoginSuccessModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ASAuthorizationAppleIDCredential+LoginSuccessModel.m"; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				3782D15E23F690B000F15454 /* LineSDKCredential+LoginSuccessModel.m */,
 				3728DEB423FA64320034383C /* ASAuthorizationAppleIDCredential+LoginSuccessModel.h */,
 				3728DEB523FA64320034383C /* ASAuthorizationAppleIDCredential+LoginSuccessModel.m */,
+				3706EFC223FFAC2200B470AB /* LineSDKConfiguration+CustomerLineConfig.h */,
+				3706EFC323FFAC2200B470AB /* LineSDKConfiguration+CustomerLineConfig.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				3782D16223F690B000F15454 /* GIDGoogleUser+LoginSuccessModel.m in Sources */,
 				3782D15F23F690B000F15454 /* LoginManager.m in Sources */,
 				3782D16423F690B000F15454 /* LineSDKCredential+LoginSuccessModel.m in Sources */,
+				3706EFC423FFAC2200B470AB /* LineSDKConfiguration+CustomerLineConfig.m in Sources */,
 				3728DEB623FA64320034383C /* ASAuthorizationAppleIDCredential+LoginSuccessModel.m in Sources */,
 				3782D16123F690B000F15454 /* LoginViewController.m in Sources */,
 				3728DEBA23FA70450034383C /* FinishController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "LoginViewController.h"
 #import <AuthenticationServices/AuthenticationServices.h>
 #import "ASAuthorizationAppleIDCredential+LoginSuccessModel.h"
+#import "LineSDKConfiguration+CustomerLineConfig.h"
 
 typedef void(^ObserveOfSentButton)(BOOL);
 
@@ -37,53 +38,33 @@ typedef void(^ObserveOfSentButton)(BOOL);
 
 -(void)setConfig:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     //google
-    if (![self.dataSource respondsToSelector:@selector(Google_AppID)] || !self.dataSource.Google_AppID) {
-        [NSException raise:@"loss Google app id" format:@"must set google app id"];
+    if (![self.dataSource respondsToSelector:@selector(GoogleAppID)] || !self.dataSource.GoogleAppID) {
+        [NSException raise:@"loss Google app id" format:@"must set google app id in Application.m"];
     }else{
-        [[GIDSignIn sharedInstance] setClientID:self.dataSource.Google_AppID];
+        [[GIDSignIn sharedInstance] setClientID:self.dataSource.GoogleAppID];
     }
+    
     //fb
+    if (![self.dataSource respondsToSelector:@selector(FacebookAppID)] || !self.dataSource.FacebookAppID) {
+        [NSException raise:@"loss facebook app id" format:@"must set facebook app id in Application.m"];
+    }else{
+        [FBSDKSettings setAppID:self.dataSource.FacebookAppID];
+    }
+
+    if (![self.dataSource respondsToSelector:@selector(FacebookDisplayName)] || !self.dataSource.FacebookDisplayName) {
+        [NSException raise:@"loss facebook displayname" format:@"must set facebookdisplayname in Application.m"];
+    }else{
+        [FBSDKSettings setDisplayName:self.dataSource.FacebookDisplayName];
+    }
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     //line
-    
-    //apple
-    
-    
-    //check info.plist setting
-    NSString *plistPath = @"";
-    NSError *error = nil;
-    NSPropertyListFormat format;
-    plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
-    NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization propertyListWithData:plistXML options:NSPropertyListMutableContainersAndLeaves format:&format error:&error];
-
-    if (!temp[@"FacebookDisplayName"]) {
-        [NSException raise:@"loss FacebookDisplayName" format:@"Some information must be set on info.plist key:FacebookDisplayName (about facebook)"];
-    }else if (!temp[@"FacebookAppID"]){
-        [NSException raise:@"loss FacebookAppID" format:@"Some information must be set on info.plist key:FacebookAppID (about facebook)"];
-    }else if (!temp[@"LineSDKConfig"]){
-        [NSException raise:@"loss LineSDKConfig" format:@"Some information must be set on info.plist key:LineSDKConfig (about line)"];
-    }else if (temp[@"LSApplicationQueriesSchemes"]){
-        NSArray *array = temp[@"LSApplicationQueriesSchemes"];
-        BOOL lineInfoPlistSetted = false;
-        BOOL fbInfoPlistSetted = false;
-        for (int i = 0 ; i < array.count; i++) {
-            if ([array[i] isEqualToString: @"lineauth2"]) {
-                lineInfoPlistSetted = true;
-            }
-            if ([array[i] isEqualToString: @"fbauth"]) {
-                fbInfoPlistSetted = true;
-            }
-        }
-        if (!lineInfoPlistSetted) {
-            [NSException raise:@"loss lineInfoPlistSetted" format:@"Some information must be set on info.plist key:LSApplicationQueriesSchemes (about line)"];
-        }
-        
-        if (!fbInfoPlistSetted) {
-            [NSException raise:@"loss fbInfoPlistSetted" format:@"Some information must be set on info.plist key:LSApplicationQueriesSchemes (about facebook)"];
-        }
+    if (![self.dataSource respondsToSelector:@selector(lineChannel)] || !self.dataSource.lineChannel) {
+        [NSException raise:@"loss line channel" format:@"must set line channel in application.m"];
+    }else{
+        [FBSDKSettings setDisplayName:self.dataSource.FacebookDisplayName];
     }
-    
+
+    //apple
 }
 
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion{

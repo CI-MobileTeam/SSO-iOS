@@ -51,10 +51,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>FacebookAppID</key>
-	<string>186438775778435</string>
-	<key>FacebookDisplayName</key>
-	<string>Cloud-interactive login</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>lineauth2</string>
@@ -76,11 +72,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>LineSDKConfig</key>
-	<dict>
-		<key>ChannelID</key>
-		<string>1653849381</string>
-	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
