@@ -36,6 +36,8 @@ typedef enum : NSUInteger {
 
 -(void)setConfig:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
+-(BOOL)handleOpenUrl:(NSURL *)url app:(UIApplication *)app options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options;
+
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion;
 
 @end

@@ -43,7 +43,8 @@ typedef void(^ObserveOfSentButton)(BOOL);
     }else{
         [[GIDSignIn sharedInstance] setClientID:self.dataSource.GoogleAppID];
     }
-    
+    [[GIDSignIn sharedInstance] setDelegate:self.delegateVC];
+
     //fb
     if (![self.dataSource respondsToSelector:@selector(FacebookAppID)] || !self.dataSource.FacebookAppID) {
         [NSException raise:@"loss facebook app id" format:@"must set facebook app id in Application.m"];
@@ -60,11 +61,30 @@ typedef void(^ObserveOfSentButton)(BOOL);
     //line
     if (![self.dataSource respondsToSelector:@selector(lineChannel)] || !self.dataSource.lineChannel) {
         [NSException raise:@"loss line channel" format:@"must set line channel in application.m"];
-    }else{
-        [FBSDKSettings setDisplayName:self.dataSource.FacebookDisplayName];
     }
-
+    
     //apple
+}
+
+-(BOOL)handleOpenUrl:(NSURL *)url app:(UIApplication *)app options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+    
+    if ([[GIDSignIn sharedInstance] handleURL:url]) {
+        
+        return YES;
+        
+    }
+    
+    if ([[LineSDKLogin sharedInstance] handleOpenURL:url]) {
+        
+        return YES;
+    }
+    
+    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+    if (handled) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 -(void)LoginWithThirdParty:(LoginType)logintype presentVC:(UIViewController *)presentVC completion:(void(^)(BOOL,id<LoginSuccessSpec>, NSString *))completion{
@@ -114,7 +134,6 @@ typedef void(^ObserveOfSentButton)(BOOL);
 
 
 -(void)LoginWithGoogle:(UIViewController *)presentVC{
-    [[GIDSignIn sharedInstance] setDelegate:self.delegateVC];
     [[GIDSignIn sharedInstance] setPresentingViewController:presentVC];
     [[GIDSignIn sharedInstance] signIn];
 }

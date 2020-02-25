@@ -60,27 +60,13 @@
 }
 
 -(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler{
-       if ([[LineSDKLogin sharedInstance] handleOpenURL:userActivity.webpageURL]) {
-           return YES;
-       }
+
     return YES;
 }
 
 -(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
     
-    if ([[GIDSignIn sharedInstance] handleURL:url]) {
-        
-        return YES;
-        
-    }
-    
-    if ([[LineSDKLogin sharedInstance] handleOpenURL:url]) {
-        
-        return YES;
-    }
-    
-    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:app openURL:url sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
-    if (handled) {
+    if ([[LoginManager sharedInstance] handleOpenUrl:url app:app options:options]) {
         return YES;
     }
     
